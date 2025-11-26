@@ -1,0 +1,192 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Item;
+use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+class ItemController extends Controller
+{
+    // Show create form
+    public function create()
+    {
+        // Jika tabel categories belum tersedia (belum migrate), jangan lempar exception.
+        try {
+            $categories = Category::whereIn('name', ['Guns', 'Knives', 'Gloves', 'Stickers'])->orderBy('name')->get();
+        } catch (\Throwable $e) {
+            $categories = collect();
+        }
+
+        return view('admin.items.create', compact('categories'));
+    }
+
+    // Store new item
+    public function store(Request $request)
+    {
+        // Normalize price input so users can paste formatted values like "1.000,50" or "1,000.50"
+        $priceRaw = $request->input('price');
+        if (is_string($priceRaw)) {
+            // keep digits, dot and comma only
+            $p = preg_replace('/[^\d\.,]/', '', $priceRaw);
+            if ($p !== '') {
+                if (strpos($p, ',') !== false && strpos($p, '.') !== false) {
+                    // both comma and dot present: assume dot as thousand separator and comma as decimal
+                    $p = str_replace('.', '', $p);
+                    $p = str_replace(',', '.', $p);
+                } else {
+                    // only comma present: treat comma as decimal separator
+                    if (strpos($p, ',') !== false) {
+                        $p = str_replace(',', '.', $p);
+                    }
+                    // only dots present: allow as decimal separator (or integer thousands if multiple dots handled below)
+                }
+
+                // If multiple dots remain, keep the last as decimal separator and remove others (handle 1.234.567,89 scenarios)
+                if (substr_count($p, '.') > 1) {
+                    $parts = explode('.', $p);
+                    $dec = array_pop($parts);
+                    $p = implode('', $parts) . '.' . $dec;
+                }
+
+                $normalizedPrice = $p;
+            } else {
+                $normalizedPrice = $priceRaw;
+            }
+
+            $request->merge(['price' => $normalizedPrice]);
+        }
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:191',
+            'description' => 'required|string|max:250',
+            'rarity' => 'required|string|in:common,uncommon,rare,mythical,legendary,ancient,exceedingly_rare,immortal',
+            'price' => 'required|numeric|min:0.01',
+            'category_id' => 'required|exists:categories,id',
+            // allow webp as well
+            'image' => 'required|image|mimes:jpeg,jpg,png,webp|max:2048',
+        ], [
+            'name.required' => 'Nama item wajib diisi.',
+            'description.required' => 'Deskripsi wajib diisi.',
+            'rarity.required' => 'Rarity wajib dipilih.',
+            'price.required' => 'Harga wajib diisi dan harus lebih dari 0.',
+            'category_id.required' => 'Kategori wajib dipilih.',
+            'image.required' => 'Gambar item wajib diupload.',
+        ]);
+
+        // set metadata to include rarity (store as JSON in metadata column)
+        $meta = ['rarity' => $validated['rarity']];
+
+        // server-side: description max length enforced above (max:250)
+
+        $data = [
+            'name' => $validated['name'],
+            'description' => $validated['description'] ?? null,
+            'metadata' => $meta,
+            'price' => $validated['price'],
+            'category_id' => $validated['category_id'] ?? null,
+        ];
+
+        if ($request->file('image')) {
+            $data['image'] = $request->file('image')->store('items', 'public');
+        }
+
+        Item::create($data);
+
+        return redirect()->route('admin.dashboard')->with('success', 'Item berhasil ditambahkan.');
+    }
+
+    // Show edit form
+    public function edit(Item $item)
+    {
+        try {
+            $categories = Category::whereIn('name', ['Guns', 'Knives', 'Gloves', 'Stickers'])->orderBy('name')->get();
+        } catch (\Throwable $e) {
+            $categories = collect();
+        }
+
+        return view('admin.items.edit', compact('item', 'categories'));
+    }
+
+    // Update existing item
+    public function update(Request $request, Item $item)
+    {
+        // Normalize price input (same logic as store)
+        $priceRaw = $request->input('price');
+        if (is_string($priceRaw)) {
+            $p = preg_replace('/[^\d\.,]/', '', $priceRaw);
+            if ($p !== '') {
+                if (strpos($p, ',') !== false && strpos($p, '.') !== false) {
+                    $p = str_replace('.', '', $p);
+                    $p = str_replace(',', '.', $p);
+                } else {
+                    if (strpos($p, ',') !== false) {
+                        $p = str_replace(',', '.', $p);
+                    }
+                }
+
+                if (substr_count($p, '.') > 1) {
+                    $parts = explode('.', $p);
+                    $dec = array_pop($parts);
+                    $p = implode('', $parts) . '.' . $dec;
+                }
+
+                $normalizedPrice = $p;
+            } else {
+                $normalizedPrice = $priceRaw;
+            }
+            $request->merge(['price' => $normalizedPrice]);
+        }
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:191',
+            'description' => 'required|string|max:250',
+            'rarity' => 'required|string|in:common,uncommon,rare,mythical,legendary,ancient,exceedingly_rare,immortal',
+            'price' => 'required|numeric|min:0.01',
+            'category_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:2048',
+        ], [
+            'name.required' => 'Nama item wajib diisi.',
+            'description.required' => 'Deskripsi wajib diisi.',
+            'rarity.required' => 'Rarity wajib dipilih.',
+            'price.required' => 'Harga wajib diisi dan harus lebih dari 0.',
+            'category_id.required' => 'Kategori wajib dipilih.',
+        ]);
+
+        // update metadata
+        $meta = ['rarity' => $validated['rarity']];
+
+        $item->name = $validated['name'];
+        $item->description = $validated['description'] ?? null;
+        $item->metadata = $meta;
+        $item->price = $validated['price'];
+        $item->category_id = $validated['category_id'] ?? null;
+
+        if ($request->file('image')) {
+            // delete old image if present
+            if (!empty($item->image) && Storage::disk('public')->exists($item->image)) {
+                Storage::disk('public')->delete($item->image);
+            }
+            $item->image = $request->file('image')->store('items', 'public');
+        }
+
+        $item->save();
+
+        return redirect()->route('admin.dashboard')->with('success', 'Item berhasil diperbarui.');
+    }
+
+    // Delete an item
+    public function destroy(Item $item)
+    {
+        // delete image file
+        if (!empty($item->image) && Storage::disk('public')->exists($item->image)) {
+            Storage::disk('public')->delete($item->image);
+        }
+
+        $item->delete();
+
+        return redirect()->route('admin.dashboard')->with('success', 'Item berhasil dihapus.');
+    }
+}
