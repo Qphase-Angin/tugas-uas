@@ -26,16 +26,19 @@ class DashboardController extends Controller
         // Ambil data items dari DB jika model tersedia
         try {
             $totalItems = Item::count();
-            $newItemsCount = Item::where('created_at', '>=', now()->subDays(7))->count();
+            // configurable window (minutes) — defaults to 8 minutes if not set in config/env
+            $window = (int) config('admin.new_items_window_minutes', 8);
+            // count items created within the configured window using Item model helper
+            $newItems = Item::countNewWithinMinutes($window);
             $items = Item::orderBy('created_at', 'desc')->take(12)->get();
         } catch (\Throwable $e) {
             // Jika belum ada table/items, gunakan fallback
             $totalItems = 0;
-            $newItemsCount = 0;
+            $newItems = 0;
             $items = [];
         }
 
-        return view('admin.dashboard', compact('activeUsers', 'items', 'totalUsers', 'totalItems', 'newItemsCount'));
+        return view('admin.dashboard', compact('activeUsers', 'items', 'totalUsers', 'totalItems', 'newItems'));
     }
 
     // PROFIL
@@ -95,7 +98,7 @@ class DashboardController extends Controller
         'konfirmasi_password' => 'required|string|min:8|same:password_baru',
         ], $messages);
 
-        $cekPassword = Hash::check($request->password_saat_ini, auth()->user()->password);
+        $cekPassword = Hash::check($request->password_saat_ini, Auth::user()->password);
 
         if (!$cekPassword) {
         return redirect()->back()->with('error', 'Gagal, password saat ini salah');

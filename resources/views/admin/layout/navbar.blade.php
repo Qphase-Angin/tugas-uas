@@ -8,8 +8,19 @@
 
         <!-- Logo Text (Visible on Mobile) -->
         <span class="text-lg font-bold text-white lg:hidden tracking-wider">
-            TEMA <span class="text-app-accent">MARKET</span>
+            TEMA <span class="text-app-brand">MARKET</span>
         </span>
+
+        <!-- Desktop logo + small badge (matching login header) -->
+        <div class="hidden lg:flex items-center gap-3 ml-3">
+                    <i class="fas fa-crosshairs text-app-brand animate-pulse text-2xl drop-shadow-md"></i>
+                    <div class="leading-none">
+                        <div class="text-lg font-rajdhani font-bold text-white tracking-wider drop-shadow-md">TEMAN <span class="text-app-brand">MARKET</span></div>
+                        <div class="mt-0 inline-block pb-0.5">
+                            <span class="font-rajdhani text-xs font-bold tracking-[0.35em] text-app-brand uppercase">Admin</span>
+                        </div>
+                    </div>
+        </div>
 
     </div>
 

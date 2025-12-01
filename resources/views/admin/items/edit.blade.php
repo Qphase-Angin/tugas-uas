@@ -62,7 +62,7 @@
                                     'Stickers' => '<svg class="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7v10a2 2 0 002 2h10l6-6V7a2 2 0 00-2-2H5a2 2 0 00-2 2z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8.5" cy="10.5" r="1" fill="currentColor" stroke="none"/></svg>',
                                 ];
                                 $catGradients = [
-                                    'Guns' => 'bg-gradient-to-r from-blue-700 via-blue-500 to-blue-400 text-white',
+                                    'Guns' => 'bg-gradient-to-r from-app-accent via-app-accent/60 to-app-accent/30 text-white',
                                     'Knives' => 'bg-gradient-to-r from-gray-800 via-gray-600 to-gray-400 text-white',
                                     'Gloves' => 'bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-200 text-black',
                                     'Stickers' => 'bg-gradient-to-r from-pink-600 via-pink-400 to-pink-200 text-white',
@@ -83,12 +83,6 @@
                                 <label class="cursor-pointer" data-cat-name="{{ $cat->name }}">
                                     <input type="radio" name="category_id" value="{{ $cat->id }}" class="hidden" {{ old('category_id', $item->category_id) == $cat->id ? 'checked' : '' }}>
                                     <span class="inline-flex items-center gap-2 px-5 py-2 rounded-full {{ $catGradients[$cat->name] ?? 'bg-app-bg text-white' }} shadow-lg hover:scale-105 hover:shadow-xl transition-all border border-app-border {{ old('category_id', $item->category_id) == $cat->id ? 'ring-2 ring-app-accent' : '' }}" style="font-weight:600;" data-cat-name="{{ $cat->name }}">
-                                        <span class="cat-icon-html hidden">{!! $catIcons[$cat->name] ?? '' !!}</span>
-                                        @if($localIcon)
-                                            <img src="{{ $localIcon }}" alt="{{ $cat->name }}" class="w-5 h-5 object-contain">
-                                        @else
-                                            {!! $catIcons[$cat->name] ?? '' !!}
-                                        @endif
                                         <span class="cat-name">{{ $cat->name }}</span>
                                     </span>
                                 </label>
@@ -122,7 +116,7 @@
                             $rarities = [
                                 'common' => ['label' => 'Common', 'class' => 'bg-gray-600 text-white', 'color' => '#6b7280'],
                                 'uncommon' => ['label' => 'Uncommon', 'class' => 'bg-green-600 text-white', 'color' => '#16a34a'],
-                                'rare' => ['label' => 'Rare', 'class' => 'bg-blue-600 text-white', 'color' => '#2563eb'],
+                                'rare' => ['label' => 'Rare', 'class' => 'bg-app-accent text-white', 'color' => '#3b82f6'],
                                 'mythical' => ['label' => 'Mythical', 'class' => 'bg-purple-600 text-white', 'color' => '#7c3aed'],
                                 'legendary' => ['label' => 'Legendary', 'class' => 'bg-yellow-500 text-black', 'color' => '#f59e0b'],
                                 'ancient' => ['label' => 'Ancient', 'class' => 'bg-indigo-800 text-white', 'color' => '#3730a3'],
@@ -137,7 +131,7 @@
                                 $rarityGradients = [
                                     'common' => 'bg-gradient-to-r from-gray-600 via-gray-400 to-gray-200 text-white',
                                     'uncommon' => 'bg-gradient-to-r from-green-600 via-green-400 to-green-200 text-white',
-                                    'rare' => 'bg-gradient-to-r from-blue-600 via-blue-400 to-blue-200 text-white',
+                                    'rare' => 'bg-gradient-to-r from-app-accent via-app-accent/60 to-app-accent/20 text-white',
                                     'mythical' => 'bg-gradient-to-r from-purple-600 via-purple-400 to-purple-200 text-white',
                                     'legendary' => 'bg-gradient-to-r from-yellow-500 via-yellow-300 to-yellow-100 text-black',
                                     'ancient' => 'bg-gradient-to-r from-indigo-800 via-indigo-500 to-indigo-200 text-white',
@@ -157,7 +151,7 @@
                                     style="background: rgba(0,0,0,0.35); border-color: {{ $r['color'] }};">
                                     <span class="w-3 h-3 rounded-full" style="background: {{ $r['color'] }}; box-shadow: 0 0 8px {{ $r['color'] }}33"></span>
                                     <span class="rarity-label">{{ $r['label'] }}</span>
-                                    <span class="rarity-check ml-2 hidden"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                                    <!-- check mark removed -->
                                 </button>
                             @endforeach
 
@@ -198,15 +192,12 @@
                 b.classList.remove('shadow-lg');
                 b.style.boxShadow = '';
                 b.style.borderColor = '';
-                const check = b.querySelector('.rarity-check');
-                if(check) check.classList.add('hidden');
             });
             btn.setAttribute('aria-checked','true');
             btn.classList.add('shadow-lg');
             btn.style.boxShadow = `0 8px 24px ${color}33`;
             btn.style.borderColor = color;
-            const check = btn.querySelector('.rarity-check');
-            if(check) check.classList.remove('hidden');
+            // (checkmark removed; visual selection handled via border/glow)
 
             if(preview){
                 preview.classList.remove('hidden');
@@ -243,12 +234,12 @@
                     const badge = label.querySelector('span'); if(badge) badge.classList.add('ring-2','ring-app-accent');
                     const preview = document.getElementById('category-selected-preview');
                     if(preview){
-                        const iconHtmlEl = label.querySelector('.cat-icon-html');
                         const nameEl = label.querySelector('.cat-name');
                         preview.innerHTML = '';
-                        const iconWrap = document.createElement('span'); iconWrap.className = 'inline-flex items-center'; if(iconHtmlEl) iconWrap.innerHTML = iconHtmlEl.innerHTML;
-                        const nameSpan = document.createElement('span'); nameSpan.className = 'ml-3 font-semibold'; nameSpan.textContent = nameEl ? nameEl.textContent : label.getAttribute('data-cat-name') || '';
-                        preview.appendChild(iconWrap); preview.appendChild(nameSpan);
+                        const nameSpan = document.createElement('span');
+                        nameSpan.className = 'font-semibold';
+                        nameSpan.textContent = nameEl ? nameEl.textContent : label.getAttribute('data-cat-name') || '';
+                        preview.appendChild(nameSpan);
                     }
                 }
             });

@@ -1,7 +1,7 @@
 <!-- Logo Area -->
 <div class="h-16 flex items-center px-6 border-b border-app-border bg-app-bg/50 sticky top-0 z-10">
     <a href="#" class="flex items-center gap-3 group">
-        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-app-accent to-blue-700 flex items-center justify-center shadow-lg shadow-app-accent/20 group-hover:scale-110 transition-transform">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-app-accent to-app-accent/70 flex items-center justify-center shadow-lg shadow-app-accent/20 group-hover:scale-110 transition-transform">
             <i class="fas fa-gamepad text-white text-sm"></i>
         </div>
         <div>
@@ -26,7 +26,7 @@
         </li>
 
         <!-- Data Master (Treeview dengan Alpine) -->
-        <li x-data="{ expanded: {{ request()->is('admin/kategori*') || request()->is('admin/buku*') || request()->is('admin/user*') ? 'true' : 'false' }} }">
+        <li x-data="{ expanded: {{ request()->is('admin/kategori*') || request()->is('admin/buku*') || request()->is('admin/user*') || request()->is('admin/items*') ? 'true' : 'false' }} }">
             <button
                 @click="expanded = !expanded"
                 class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-app-muted hover:text-white hover:bg-app-cardHover transition-all">
@@ -44,15 +44,15 @@
 
                 <!-- Menggunakan route yang sama tapi tampilan teks berbeda -->
                 <li>
-                    <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-app-muted hover:text-app-accent hover:bg-app-cardHover transition-colors">
+                    <a href="{{ route('admin.items.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 {{ request()->is('admin/items') ? 'bg-app-accent text-white shadow-lg shadow-app-accent/20' : 'text-app-muted hover:text-app-accent hover:bg-app-cardHover' }}">
                         <i class="fas fa-tags w-4 text-center text-xs"></i>
-                        <p>Game Categories</p> <!-- Kategori -->
+                        <p>Browse Items</p>
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.items.create') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-app-muted hover:text-app-accent hover:bg-app-cardHover transition-colors">
+                    <a href="{{ route('admin.items.create') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 {{ request()->is('admin/items/create') ? 'bg-app-accent text-white shadow-lg shadow-app-accent/20' : 'text-app-muted hover:text-app-accent hover:bg-app-cardHover' }}">
                         <i class="fas fa-box-open w-4 text-center text-xs"></i>
-                        <p>Item / Skins</p> <!-- Item / Skins -->
+                        <p>Add Item</p>
                     </a>
                 </li>
                 <li>

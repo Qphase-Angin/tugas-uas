@@ -95,7 +95,7 @@
                         <!-- /.card-body -->
 
                         <div class="px-6 py-4 bg-app-bg/30 border-t border-app-border flex justify-end">
-                            <button type="submit" class="bg-app-accent hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-lg shadow-lg shadow-app-accent/20 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-app-accent ring-offset-app-bg">
+                            <button type="submit" class="bg-app-accent hover:bg-app-accent text-white font-medium py-2 px-6 rounded-lg shadow-lg shadow-app-accent/20 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-app-accent ring-offset-app-bg">
                                 <i class="fas fa-save mr-2"></i> Ubah Password
                             </button>
                         </div>

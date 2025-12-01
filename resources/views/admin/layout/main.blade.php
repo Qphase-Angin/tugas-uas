@@ -7,10 +7,11 @@
 
     <title>TEMA Admin | @yield('title')</title>
 
-    <!-- Google Fonts: Inter (Modern Look) -->
+    <!-- Google Fonts: Inter (Modern Look) + Rajdhani to match login brand -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -21,7 +22,7 @@
             darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], rajdhani: ['Rajdhani', 'sans-serif'] },
                     colors: {
                         app: {
                             bg: '#0b0e14',       // Background Hitam Kebiruan
@@ -31,6 +32,8 @@
                             text: '#e2e8f0',     // Teks Utama
                             muted: '#94a3b8',    // Teks Secondary
                             accent: '#3b82f6',   // Biru Elektrik (Tema Game/Tech)
+                            brand: '#3b82f6',    // Login/header brand color (match app.accent)
+                            brandHover: '#2563eb',
                             accentHover: '#2563eb',
                             success: '#10b981',
                             danger: '#ef4444',
@@ -52,6 +55,8 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css') }}">
 
     <style>
+        /* Ensure Alpine x-cloak hidden until JS runs to prevent flash of uninitialized UI */
+        [x-cloak] { display: none !important; }
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0b0e14; }
@@ -91,6 +96,7 @@
         </header>
 
         <div class="flex flex-1 pt-16">
+
             <!-- Sidebar -->
             <aside
                 :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"

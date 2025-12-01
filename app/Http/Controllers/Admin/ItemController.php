@@ -187,6 +187,51 @@ class ItemController extends Controller
 
         $item->delete();
 
-        return redirect()->route('admin.dashboard')->with('success', 'Item berhasil dihapus.');
+        // Prefer returning back to the list page if available.
+        if (request()->wantsJson() || request()->ajax()) {
+            return response()->json(['success' => true, 'message' => 'Item berhasil dihapus.']);
+        }
+
+        return redirect()->back()->with('success', 'Item berhasil dihapus.');
+    }
+
+    // Browse / index list of items with optional category filter
+    public function index(Request $request)
+    {
+        $categorySlug = $request->query('category');
+
+        // categories for filter UI
+        try {
+            // include a count of items per category so UI can show badges
+            $categories = Category::withCount('items')->orderBy('name')->get();
+        } catch (\Throwable $e) {
+            $categories = collect();
+        }
+
+        $itemsQuery = Item::with('category')->orderBy('created_at', 'desc');
+
+        if ($categorySlug) {
+            $cat = Category::where('slug', $categorySlug)->first();
+            if ($cat) {
+                $itemsQuery->where('category_id', $cat->id);
+            }
+        }
+
+        $items = $itemsQuery->paginate(12)->withQueryString();
+
+        // total items (all categories) - used to show the "Semua" count badge
+        try {
+            $totalItems = Item::count();
+        } catch (\Throwable $e) {
+            $totalItems = 0;
+        }
+
+        return view('admin.items.browse_items', compact('items', 'categories', 'categorySlug', 'totalItems'));
+    }
+
+    // Show item detail
+    public function show(Item $item)
+    {
+        return view('admin.items.show', compact('item'));
     }
 }

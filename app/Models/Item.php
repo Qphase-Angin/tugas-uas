@@ -26,4 +26,21 @@ class Item extends Model
         'metadata' => 'array',
         'price' => 'decimal:2',
     ];
+
+    // Category relationship - each item belongs to one category
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Count items created within the last N minutes.
+     *
+     * @param int $minutes
+     * @return int
+     */
+    public static function countNewWithinMinutes(int $minutes = 8): int
+    {
+        return static::where('created_at', '>=', now()->subMinutes($minutes))->count();
+    }
 }

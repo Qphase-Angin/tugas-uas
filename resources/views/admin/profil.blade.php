@@ -106,9 +106,6 @@
                                 </div>
                                 <p class="text-[10px] text-gray-600 mt-1">*Hubungi Super Admin untuk mengubah email.</p>
                             </div>
-
-                            <!-- Field Alamat telah dihapus sesuai permintaan -->
-
                         </div>
                     </div>
                 </div>
@@ -122,7 +119,7 @@
         $(document).ready(function() {
             // Definisi Class Tailwind untuk Toggle
             const btnDefaultClass = 'bg-app-cardHover text-app-muted hover:text-white hover:bg-app-border border-app-border';
-            const btnActiveClass = 'bg-app-accent text-white hover:bg-blue-600 border-transparent shadow-lg shadow-app-accent/20';
+            const btnActiveClass = 'bg-app-accent text-white hover:bg-app-accent border-transparent shadow-lg shadow-app-accent/20';
 
             function toggleEditMode(isEditMode, isCancel) {
                 const btn = $('#toggleButton');

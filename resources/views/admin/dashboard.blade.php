@@ -26,7 +26,7 @@
                   @click="openPanel === 'items' ? openPanel = null : openPanel = 'items'"
                   :class="openPanel === 'items' ? 'ring-2 ring-app-accent/30' : ''">
                 <div class="flex items-start justify-between mb-2">
-                    <p class="text-app-muted text-xs font-bold uppercase tracking-wider">Total Items & Skins</p>
+                    <p class="text-app-muted text-xs font-bold uppercase tracking-wider">Total Items</p>
                     <div class="p-2 bg-app-bg rounded-lg text-app-accent group-hover:text-white transition-colors">
                         <i class="fas fa-box"></i>
                     </div>
@@ -41,7 +41,7 @@
                   :class="openPanel === 'users' ? 'ring-2 ring-app-accent/30' : ''">
                 <div class="flex items-start justify-between mb-2">
                     <p class="text-app-muted text-xs font-bold uppercase tracking-wider">Active Users</p>
-                    <div class="p-2 bg-app-bg rounded-lg text-blue-500 group-hover:text-white transition-colors">
+                    <div class="p-2 bg-app-bg rounded-lg text-app-accent group-hover:text-white transition-colors">
                         <i class="fas fa-users"></i>
                     </div>
                 </div>
@@ -114,7 +114,7 @@
 
                                 <div class="bg-app-bg/50 p-4 pt-8 rounded-lg border flex items-start gap-4 relative overflow-hidden" style="border-color: {{ $rColor }}; box-shadow: 0 8px 28px {{ $rColor }}22;">
                                     <div class="absolute left-3 top-3 flex items-center gap-2">
-                                        <a href="{{ route('admin.items.edit', $item->id) }}" class="text-xs px-2 py-1 rounded bg-black/40 hover:bg-black/60 text-white">Edit</a>
+                                        <a href="{{ route('admin.items.edit', $item->id) }}" class="text-xs px-2 py-1 rounded bg-app-accent/80 hover:bg-app-accent text-white">Edit</a>
                                         <button type="button" @click='confirmDelete = { id: {{ $item->id }}, name: {!! json_encode($item->name) !!} }; showDeleteModal = true' class="text-xs px-2 py-1 rounded bg-red-600/80 hover:bg-red-600 text-white">Hapus</button>
                                     </div>
                                     {{-- rarity badge (moved to top-right so it doesn't cover long names) --}}
@@ -139,7 +139,7 @@
                                         </div>
                                     </div>
                                     {{-- added date at bottom-right --}}
-                                    <div class="absolute right-4 bottom-3 text-app-muted text-xs">Ditambahkan: {{ optional($item->created_at)->format('Y-m-d H:i') ?? '-' }}</div>
+                                    <div class="absolute right-4 bottom-3 text-app-muted text-xs">Added: {{ optional($item->created_at)->format('Y-m-d H:i') ?? '-' }}</div>
                                 </div>
                             @endforeach
                         </div>
@@ -207,7 +207,7 @@
                                 </div>
                             </div>
                             <div class="flex items-center gap-3 bg-app-bg/50 p-3 rounded-lg border border-app-border">
-                                <div class="h-10 w-10 rounded-full bg-gradient-to-br from-green-500 to-blue-400"></div>
+                                <div class="h-10 w-10 rounded-full bg-gradient-to-br from-app-accent to-app-accent/50"></div>
                                 <div>
                                     <p class="font-semibold text-white">TraderGal</p>
                                     <p class="text-app-muted text-xs">online</p>
