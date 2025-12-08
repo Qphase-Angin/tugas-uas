@@ -68,12 +68,12 @@ class ItemController extends Controller
             // allow webp as well
             'image' => 'required|image|mimes:jpeg,jpg,png,webp|max:2048',
         ], [
-            'name.required' => 'Nama item wajib diisi.',
-            'description.required' => 'Deskripsi wajib diisi.',
-            'rarity.required' => 'Rarity wajib dipilih.',
-            'price.required' => 'Harga wajib diisi dan harus lebih dari 0.',
-            'category_id.required' => 'Kategori wajib dipilih.',
-            'image.required' => 'Gambar item wajib diupload.',
+            'name.required' => 'Item name is required.',
+            'description.required' => 'Description is required.',
+            'rarity.required' => 'Rarity must be selected.',
+            'price.required' => 'Price is required and must be greater than 0.',
+            'category_id.required' => 'Category must be selected.',
+            'image.required' => 'Item image is required.',
         ]);
 
         // set metadata to include rarity (store as JSON in metadata column)
@@ -95,7 +95,7 @@ class ItemController extends Controller
 
         Item::create($data);
 
-        return redirect()->route('admin.dashboard')->with('success', 'Item berhasil ditambahkan.');
+        return redirect()->route('admin.dashboard')->with('success', 'Item added successfully.');
     }
 
     // Show edit form
@@ -174,7 +174,7 @@ class ItemController extends Controller
 
         $item->save();
 
-        return redirect()->route('admin.dashboard')->with('success', 'Item berhasil diperbarui.');
+        return redirect()->route('admin.dashboard')->with('success', 'Item updated successfully.');
     }
 
     // Delete an item
@@ -192,10 +192,10 @@ class ItemController extends Controller
 
         if (request()->wantsJson() || request()->ajax()) {
             // include the index URL so clients can redirect or refresh the grid if they wish
-            return response()->json(['success' => true, 'message' => 'Item berhasil dihapus.', 'redirect' => $indexUrl]);
+            return response()->json(['success' => true, 'message' => 'Item deleted.', 'redirect' => $indexUrl]);
         }
 
-        return redirect()->route('admin.items.index')->with('success', 'Item berhasil dihapus.');
+        return redirect()->route('admin.items.index')->with('success', 'Item deleted.');
     }
 
     // Browse / index list of items with optional category filter

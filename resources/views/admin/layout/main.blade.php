@@ -128,9 +128,7 @@
 
         <!-- Overlay untuk Mobile saat sidebar terbuka -->
         <div x-show="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-black/50 z-10 lg:hidden" style="display: none;"></div>
-    </div>
-
-    <!-- SCRIPTS -->
+     </div>    <!-- SCRIPTS -->
     <!-- jQuery (Masih dibutuhkan untuk Toastr/Datatables) -->
     <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

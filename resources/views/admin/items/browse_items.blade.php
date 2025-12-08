@@ -13,7 +13,7 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <a href="{{ route('admin.items.create') }}" class="px-3 py-2 rounded-lg bg-app-accent text-white hover:bg-app-accent/90 transition-colors">Add Item</a>
+                <a href="{{ route('admin.items.create') }}" class="px-4 py-2.5 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium transition-all flex items-center gap-2">Add Item</a>
             </div>
         </div>
 
@@ -90,13 +90,14 @@
 
                     <!-- admin actions -->
                     <div class="flex flex-col items-end gap-2 admin-action absolute right-4 top-4">
-                        <a href="{{ route('admin.items.edit', $item->id) }}" class="text-xs px-2 py-1 rounded bg-app-accent/80 hover:bg-app-accent text-white" onclick="event.stopPropagation();">Edit</a>
+                        <a href="{{ route('admin.items.edit', $item->id) }}" class="px-3 py-1.5 bg-app-accent/20 hover:bg-app-accent/30 text-app-accent rounded text-xs font-medium transition-all flex items-center gap-1" onclick="event.stopPropagation();"><i class="fas fa-edit"></i> Edit</a>
 
                         <button
                             type="button"
                             onclick="event.stopPropagation();"
                             @click='confirmDelete = { id: {{ $item->id }}, name: {!! json_encode($item->name) !!} }; showDeleteModal = true'
-                            class="text-xs px-2 py-1 rounded bg-red-600/80 hover:bg-red-600 text-white">Hapus</button>
+                            class="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded text-xs font-medium transition-all flex items-center gap-1">
+                            <i class="fas fa-trash"></i> Delete</button>
                     </div>
 
                     {{-- rarity badge: above image (overlay) --}}
@@ -108,7 +109,7 @@
 
             @empty
                 <div class="col-span-full bg-app-card border border-app-border rounded-lg p-6 text-app-muted">
-                    Tidak ada items ditemukan.
+                    No items found.
                 </div>
             @endforelse
 

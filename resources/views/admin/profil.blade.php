@@ -124,10 +124,10 @@
             function toggleEditMode(isEditMode, isCancel) {
                 const btn = $('#toggleButton');
 
-                if(isEditMode) {
-                    // Masuk Mode Edit
+                    if(isEditMode) {
+                    // Enter Edit Mode
                     btn.removeClass(btnDefaultClass).addClass(btnActiveClass);
-                    btn.html('<i class="fas fa-save mr-2"></i> Simpan Perubahan');
+                    btn.html('<i class="fas fa-save mr-2"></i> Save Changes');
                     btn.attr('type', 'submit');
 
                     $('#batal').removeClass('hidden');
@@ -135,7 +135,7 @@
                 } else {
                     // Keluar Mode Edit
                     btn.removeClass(btnActiveClass).addClass(btnDefaultClass);
-                    btn.html('<i class="fas fa-edit mr-2"></i> Klik untuk Ubah Profil');
+                    btn.html('<i class="fas fa-edit mr-2"></i> Click to Edit Profile');
                     btn.attr('type', 'button');
 
                     $('#batal').addClass('hidden');

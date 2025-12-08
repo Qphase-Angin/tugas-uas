@@ -163,8 +163,8 @@
                     </div>
 
                     <div class="flex gap-3">
-                        <button type="submit" class="px-4 py-2 bg-app-accent text-white rounded">Simpan Perubahan</button>
-                        <a href="{{ route('admin.dashboard') }}" class="px-4 py-2 bg-app-bg/60 text-app-muted rounded">Batal</a>
+                        <button type="submit" class="px-4 py-2 bg-app-accent text-white rounded">Save Changes</button>
+                        <a href="{{ route('admin.dashboard') }}" class="px-4 py-2 bg-app-bg/60 text-app-muted rounded">Cancel</a>
                     </div>
                 </form>
             </div>

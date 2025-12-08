@@ -115,7 +115,7 @@
                                 <div class="bg-app-bg/50 p-4 pt-8 rounded-lg border flex items-start gap-4 relative overflow-hidden" style="border-color: {{ $rColor }}; box-shadow: 0 8px 28px {{ $rColor }}22;">
                                     <div class="absolute left-3 top-3 flex items-center gap-2">
                                         <a href="{{ route('admin.items.edit', $item->id) }}" class="text-xs px-2 py-1 rounded bg-app-accent/80 hover:bg-app-accent text-white">Edit</a>
-                                        <button type="button" @click='confirmDelete = { id: {{ $item->id }}, name: {!! json_encode($item->name) !!} }; showDeleteModal = true' class="text-xs px-2 py-1 rounded bg-red-600/80 hover:bg-red-600 text-white">Hapus</button>
+                                        <button type="button" @click='confirmDelete = { id: {{ $item->id }}, name: {!! json_encode($item->name) !!} }; showDeleteModal = true' class="text-xs px-2 py-1 rounded bg-red-600/80 hover:bg-red-600 text-white">Delete</button>
                                     </div>
                                     {{-- rarity badge (moved to top-right so it doesn't cover long names) --}}
                                     <div class="absolute right-4 top-4">
@@ -144,7 +144,7 @@
                             @endforeach
                         </div>
                     @else
-                        <p class="text-app-muted">Tidak ada data `items` yang diberikan. Contoh preview:</p>
+                        <p class="text-app-muted">No `items` data provided. Example preview:</p>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                             <div class="bg-app-bg/50 p-4 rounded-lg border border-app-border">
                                 <p class="font-semibold text-white">AK-47 | Redline</p>
@@ -187,17 +187,13 @@
                                     </div>
 
                                     <div class="flex items-center gap-2">
-                                        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Hapus user ini? Tindakan tidak dapat dibatalkan.');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-sm px-3 py-1 rounded-md bg-red-600/80 hover:bg-red-600 text-white">Hapus</button>
-                                        </form>
+                                        <button type="button" @click='confirmDelete = { id: {{ $user->id }}, name: {!! json_encode($user->nama) !!}, type: "users" }; showDeleteModal = true' class="text-sm px-3 py-1 rounded-md bg-red-600/80 hover:bg-red-600 text-white">Delete</button>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
                     @else
-                        <p class="text-app-muted">Tidak ada data `activeUsers` yang diberikan. Contoh preview:</p>
+                        <p class="text-app-muted">No `activeUsers` data provided. Example preview:</p>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                             <div class="flex items-center gap-3 bg-app-bg/50 p-3 rounded-lg border border-app-border">
                                 <div class="h-10 w-10 rounded-full bg-gradient-to-br from-pink-500 to-yellow-400"></div>
@@ -226,8 +222,9 @@
             </div>
         </div>
 
-        <!-- Delete confirmation modal -->
-        <div x-show="showDeleteModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center">
+        <!-- Delete confirmation modals -->
+        <!-- Delete Item Modal -->
+        <div x-show="showDeleteModal && confirmDelete.type !== 'users'" x-cloak class="fixed inset-0 z-50 flex items-center justify-center">
             <div class="absolute inset-0 bg-black/60" @click="showDeleteModal = false"></div>
             <div class="relative bg-app-card border border-app-border rounded-lg p-6 w-full max-w-md mx-4">
                 <h3 class="text-lg font-semibold text-white">Confirm To Delete Item</h3>
@@ -236,12 +233,33 @@
                 <p class="text-sm text-app-muted mt-1">This action cannot be undone. The item image will be deleted as well.</p>
 
                 <div class="mt-6 flex justify-end gap-3">
-                    <button type="button" @click="showDeleteModal = false" class="px-4 py-2 rounded bg-app-bg/60 text-app-muted">Cancle</button>
+                    <button type="button" @click="showDeleteModal = false" class="px-4 py-2 rounded bg-app-bg/60 text-app-muted">Cancel</button>
 
                     <form x-bind:action="'{{ url('admin/items') }}/' + (confirmDelete.id || '')" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white">Delete Item</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delete User Modal -->
+        <div x-show="showDeleteModal && confirmDelete.type === 'users'" x-cloak class="fixed inset-0 z-50 flex items-center justify-center">
+            <div class="absolute inset-0 bg-black/60" @click="showDeleteModal = false"></div>
+            <div class="relative bg-app-card border border-app-border rounded-lg p-6 w-full max-w-md mx-4">
+                <h3 class="text-lg font-semibold text-white">Confirm To Delete User</h3>
+                <p class="text-app-muted mt-2">You will delete the following user:</p>
+                <p class="font-semibold text-white mt-3" x-text="confirmDelete.name"></p>
+                <p class="text-sm text-app-muted mt-1">This action cannot be undone.</p>
+
+                <div class="mt-6 flex justify-end gap-3">
+                    <button type="button" @click="showDeleteModal = false" class="px-4 py-2 rounded bg-app-bg/60 text-app-muted">Cancel</button>
+
+                    <form x-bind:action="'{{ url('admin/users') }}/' + (confirmDelete.id || '')" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white">Delete User</button>
                     </form>
                 </div>
             </div>

@@ -14,7 +14,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // Ambil pengguna yang ditandai aktif (is_active = 1)
+        // Get users that are marked active (is_active = 1)
         $activeUsers = User::select('id', 'nama', 'email', 'image', 'is_active', 'created_at')
             ->where('is_active', true)
             ->orderBy('updated_at', 'desc')
@@ -50,10 +50,10 @@ class DashboardController extends Controller
 
     public function updateProfil(Request $request)
     {
-    $messages = [
-        'nama.required' => 'Nama lengkap harus diisi.',
-        'image.image' => 'Gambar harus berupa file image.',
-        'image.max' => 'Maksimal ukuran file 1 MB.',
+        $messages = [
+        'nama.required' => 'Full name is required.',
+        'image.image' => 'Image must be an image file.',
+        'image.max' => 'Maximum file size is 1 MB.',
     ];
     $validatedData = $request->validate([
         'nama' => 'required|string|max:128',
@@ -69,8 +69,7 @@ class DashboardController extends Controller
     $validatedData['image'] = $request->file('image')->store('profil-pic', 'public');
     }
     User::where('id', Auth::user()->id)->update($validatedData);
-    return redirect()->route('admin.profil')->with('success', 'Profilmu berhasil
-    diupdate.');
+    return redirect()->route('admin.profil')->with('success', 'Your profile has been updated successfully.');
     }
 
     // GANTI PASSWORD
@@ -82,14 +81,13 @@ class DashboardController extends Controller
     public function updateGantiPassword(Request $request)
     {
         $messages = [
-        'password_saat_ini.required' => 'Password saat ini harus diisi.',
-        'password_saat_ini.min' => 'Minimal 8 karakter.',
-        'password_baru.required' => 'Password baru harus diisi.',
-        'password_baru.min' => 'Minimal 8 karakter.',
-        'konfirmasi_password.required' => 'Konfirmasi password harus diisi.',
-        'konfirmasi_password.min' => 'Minimal 8 karakter.',
-        'konfirmasi_password.same' => 'Password dan konfirmasi password tidak
-    cocok.',
+        'password_saat_ini.required' => 'Current password is required.',
+        'password_saat_ini.min' => 'Minimum 8 characters.',
+        'password_baru.required' => 'New password is required.',
+        'password_baru.min' => 'Minimum 8 characters.',
+        'konfirmasi_password.required' => 'Password confirmation is required.',
+        'konfirmasi_password.min' => 'Minimum 8 characters.',
+        'konfirmasi_password.same' => 'Password and confirmation do not match.',
         ];
 
         $validatedData = $request->validate([
@@ -101,12 +99,12 @@ class DashboardController extends Controller
         $cekPassword = Hash::check($request->password_saat_ini, Auth::user()->password);
 
         if (!$cekPassword) {
-        return redirect()->back()->with('error', 'Gagal, password saat ini salah');
+        return redirect()->back()->with('error', 'Current password is incorrect.');
         }
 
         User::where('id', Auth::user()->id)->update([
         'password' => Hash::make($request->password_baru),
         ]);
-        return redirect()->route('admin.ganti-password')->with('success', 'Password berhasil diupdate.');
+        return redirect()->route('admin.ganti-password')->with('success', 'Password updated successfully.');
     }
 }

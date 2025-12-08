@@ -42,23 +42,23 @@
                             <button
                                 type="button"
                                 @click='confirmDelete = { id: {{ $item->id }}, name: {!! json_encode($item->name) !!} }; showDeleteModal = true'
-                                class="px-3 py-2 rounded bg-red-600/80 hover:bg-red-600 text-white">Hapus</button>
+                                class="px-3 py-2 rounded bg-red-600/80 hover:bg-red-600 text-white">Delete</button>
                                 <!-- Delete confirmation modal (reused from dashboard) -->
                                 <div x-show="showDeleteModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center">
                                     <div class="absolute inset-0 bg-black/60" @click="showDeleteModal = false"></div>
                                     <div class="relative bg-app-card border border-app-border rounded-lg p-6 w-full max-w-md mx-4">
-                                                <h3 class="text-lg font-semibold text-white">Konfirmasi Hapus Item</h3>
-                                                <p class="text-app-muted mt-2">Anda akan menghapus item berikut:</p>
+                                                <h3 class="text-lg font-semibold text-white">Confirm Delete Item</h3>
+                                                <p class="text-app-muted mt-2">You will delete the following item:</p>
                                         <p class="font-semibold text-white mt-3" x-text="confirmDelete.name"></p>
                                         <p class="text-sm text-app-muted mt-1">This action cannot be undone. The item image will be deleted as well.</p>
 
                                         <div class="mt-6 flex justify-end gap-3">
-                                            <button type="button" @click="showDeleteModal = false" class="px-4 py-2 rounded bg-app-bg/60 text-app-muted">Batal</button>
+                                            <button type="button" @click="showDeleteModal = false" class="px-4 py-2 rounded bg-app-bg/60 text-app-muted">Cancel</button>
 
                                             <form x-bind:action="'{{ url('admin/items') }}/' + (confirmDelete.id || '')" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white">Hapus Item</button>
+                                                <button type="submit" class="px-4 py-2 rounded bg-red-600 text-white">Delete Item</button>
                                             </form>
                                         </div>
                                     </div>
@@ -75,7 +75,7 @@
                                 @if(!empty($item->description))
                                     {!! nl2br(e($item->description)) !!}
                                 @else
-                                    <div class="text-sm text-app-muted">Tidak ada deskripsi tersedia untuk item ini.</div>
+                                    <div class="text-sm text-app-muted">No description available for this item.</div>
                                 @endif
 
                                 {{-- optional quote/attribution below description (if metadata.quote provided) --}}
@@ -90,7 +90,7 @@
                         <div class="md:col-span-1 grid grid-cols-1 gap-4">
                             {{-- Price --}}
                             <div class="bg-app-bg/30 border border-app-border rounded p-4 flex flex-col">
-                                <div class="text-sm text-app-muted">Harga</div>
+                                <div class="text-sm text-app-muted">Price</div>
                                 <div class="font-semibold text-white mt-2">Rp {{ number_format($item->price, 0, ',', '.') }}</div>
                             </div>
 
@@ -104,13 +104,13 @@
 
                             {{-- Category --}}
                             <div class="bg-app-bg/30 border border-app-border rounded p-4">
-                                <div class="text-sm text-app-muted">Kategori</div>
+                                <div class="text-sm text-app-muted">Category</div>
                                 <div class="font-semibold text-white mt-2">{{ $item->category->name ?? '—' }}</div>
                             </div>
 
                             {{-- Added (created_at) --}}
                             <div class="bg-app-bg/30 border border-app-border rounded p-4">
-                                <div class="text-sm text-app-muted">Ditambahkan</div>
+                                <div class="text-sm text-app-muted">Added</div>
                                 <div class="font-semibold text-white mt-2">{{ optional($item->created_at)->format('Y-m-d') ?? '—' }}</div>
                             </div>
 

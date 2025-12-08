@@ -64,6 +64,37 @@
             </ul>
         </li>
 
+        <!-- User Management -->
+        <li x-data="{ expanded: {{ request()->is('admin/users*') ? 'true' : 'false' }} }">
+            <button
+                @click="expanded = !expanded"
+                class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-app-muted hover:text-white hover:bg-app-cardHover transition-all">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-users-cog w-5 text-center"></i>
+                    <span>User Management</span>
+                </div>
+                <i class="fas fa-chevron-right text-xs transition-transform duration-200" :class="expanded ? 'rotate-90' : ''"></i>
+            </button>
+
+            <!-- Submenu -->
+            <ul x-show="expanded"
+                x-collapse
+                class="mt-1 ml-2 space-y-1 border-l border-app-border pl-2">
+                <li>
+                    <a href="{{ route('admin.users.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 {{ request()->is('admin/users') && !request()->is('admin/users/active') ? 'bg-app-accent text-white shadow-lg shadow-app-accent/20' : 'text-app-muted hover:text-app-accent hover:bg-app-cardHover' }}">
+                        <i class="fas fa-list w-4 text-center text-xs"></i>
+                        <p>Users List</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.users.active') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 {{ request()->is('admin/users/active') ? 'bg-app-accent text-white shadow-lg shadow-app-accent/20' : 'text-app-muted hover:text-app-accent hover:bg-app-cardHover' }}">
+                        <i class="fas fa-user-check w-4 text-center text-xs"></i>
+                        <p>Users Activation</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
     </ul>
 
     <!-- Promo / Info Box Kecil -->
