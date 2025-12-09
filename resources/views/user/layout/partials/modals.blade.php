@@ -56,7 +56,7 @@
           </span>
 
           <input id="login_email" name="email" type="email" required
-                 placeholder="admin@example.com"
+                 placeholder="email@gmail.com"
                  class="w-full pl-12 pr-4 py-3.5 rounded-lg bg-white text-gray-800
                  placeholder-gray-500 focus:outline-none focus:ring-2
                  focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-900
@@ -107,7 +107,7 @@
         </span>
 
         <span class="text-xs text-gray-400" style="letter-spacing:1px;">
-          LOGIN FOR ADMIN
+          LOGIN FOR USER
         </span>
       </div>
 
@@ -208,7 +208,7 @@
           </label>
           <div class="relative">
             <span class="absolute left-4 top-2.5 text-gray-600"><i class="fas fa-envelope text-sm"></i></span>
-            <input id="reg_email" type="email" name="email" value="{{ old('email') }}" required placeholder="your@email.com"
+            <input id="reg_email" type="email" name="email" value="{{ old('email') }}" required placeholder="email@gmail.com"
                    class="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm transition-all duration-300 hover:bg-gray-50">
           </div>
           @error('email')
@@ -573,5 +573,25 @@ document.addEventListener('DOMContentLoaded', function() {
       openModal('loginModalOverlay');
     });
   @endif
+
+  // Toggle password visibility
+  document.querySelectorAll('.toggle-eye').forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('data-target');
+      const input = document.getElementById(targetId);
+      const icon = this.querySelector('i');
+
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    });
+  });
 });
 </script>
