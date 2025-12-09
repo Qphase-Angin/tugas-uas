@@ -41,7 +41,7 @@
     <!-- FORM -->
     <form id="loginForm" method="POST" action="{{ route('login') }}"
           class="px-6 py-6 space-y-4">
-      <h2 class="text-2xl font-bold text-white text-center mb-5">Member Login</h2>
+      <h2 class="text-2xl font-bold text-white text-center mb-5">Sign Up</h2>
       @csrf
 
       <!-- Email -->

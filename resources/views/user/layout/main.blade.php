@@ -40,6 +40,38 @@
         .btn:hover{background:var(--app-accent-600);transform:translateY(-2px)}
         .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:#fff}
 
+        /* Navbar Buttons with Glow Effect */
+        .navbar-btn {
+            display:inline-flex;align-items:center;gap:.5rem;padding:.55rem .9rem;border-radius:.6rem;background:var(--app-accent);color:#fff;border:none;font-weight:600;
+            box-shadow: 0 0 15px rgba(249, 115, 22, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .navbar-btn:hover {
+            background:var(--app-accent-600);
+            transform:translateY(-2px);
+            box-shadow: 0 0 25px rgba(249, 115, 22, 0.7), 0 0 40px rgba(249, 115, 22, 0.4);
+        }
+        .navbar-btn:active {
+            transform:translateY(0);
+        }
+
+        .navbar-btn-outline {
+            display:inline-flex;align-items:center;gap:.5rem;padding:.55rem .9rem;border-radius:.6rem;background:transparent;color:#fff;border:2px solid var(--app-accent);font-weight:600;
+            box-shadow: 0 0 12px rgba(249, 115, 22, 0.3), inset 0 0 12px rgba(249, 115, 22, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .navbar-btn-outline:hover {
+            background:transparent;
+            border-color:var(--app-accent);
+            transform:translateY(-2px);
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.6), inset 0 0 15px rgba(249, 115, 22, 0.2);
+        }
+        .navbar-btn-outline:active {
+            transform:translateY(0);
+        }
+
         /* Cards */
         .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border:1px solid rgba(255,255,255,0.03);border-radius:.75rem;padding:1rem;display:flex;gap:1rem;align-items:center;transition:transform .22s,box-shadow .22s}
         .card:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(0,0,0,.6)}

@@ -10,7 +10,7 @@
                 @if ($errors->any())
                     <div class="mb-4">
                         <div class="bg-red-700/80 border border-red-500 text-white rounded px-4 py-3">
-                            <strong>Terjadi kesalahan:</strong>
+                            <strong>An error occurred:</strong>
                             <ul class="mt-2 list-disc list-inside text-sm">
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
@@ -24,33 +24,33 @@
                     @method('PUT')
 
                     <div class="mb-4">
-                        <label class="block text-sm text-app-muted mb-1">Nama Item</label>
+                        <label class="block text-sm text-app-muted mb-1">Item Name</label>
                         <input type="text" name="name" value="{{ old('name', $item->name) }}" required class="w-full p-2 rounded bg-app-bg border border-app-border text-white">
                         @error('name') <p class="text-red-400 text-sm mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="mb-4">
-                        <label class="block text-sm text-app-muted mb-1">Deskripsi</label>
+                        <label class="block text-sm text-app-muted mb-1">Description</label>
                         <textarea name="description" rows="4" maxlength="250" class="w-full p-2 rounded bg-app-bg border border-app-border text-white resize-none" style="resize: none;">{{ old('description', $item->description) }}</textarea>
-                        <p class="text-xs text-app-muted mt-1">Maks 250 karakter.</p>
+                        <p class="text-xs text-app-muted mt-1">Max 250 characters.</p>
                         @error('description') <p class="text-red-400 text-sm mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="mb-4">
-                        <label class="block text-sm text-app-muted mb-1">Harga (IDR)</label>
+                        <label class="block text-sm text-app-muted mb-1">Price (USD)</label>
                         <div class="relative flex items-center">
-                            <span class="absolute left-3 text-app-muted text-lg pointer-events-none select-none">Rp</span>
+                            <span class="absolute left-3 text-app-muted text-lg pointer-events-none select-none">$</span>
                             <input type="text" name="price" inputmode="decimal" value="{{ old('price', isset($item->price) ? number_format($item->price, 2, ',', '.') : '0,01') }}" required class="w-full pl-10 p-2 rounded bg-app-bg border border-app-border text-white focus:ring-2 focus:ring-app-accent" placeholder="0.00" autocomplete="off">
                         </div>
-                        <p class="text-xs text-app-muted mt-1">Gunakan format angka, contoh: <code>12500</code>, <code>12.500</code>, <code>12,500.50</code> atau <code>0,01</code></p>
+                        <p class="text-xs text-app-muted mt-1">Use numeric format, for example: <code>12500</code>, <code>12.500</code>, <code>12,500.50</code> or <code>0.01</code></p>
                         @error('price') <p class="text-red-400 text-sm mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="mb-4">
-                        <label class="block text-sm text-app-muted mb-1">Kategori</label>
+                        <label class="block text-sm text-app-muted mb-1">Category</label>
                         <div class="mb-2">
                             <div id="category-selected-preview" class="inline-flex items-center gap-3 px-4 py-2 rounded-md bg-app-bg/60 border border-app-border text-sm text-white">
-                                <span class="text-app-muted">Belum ada kategori dipilih</span>
+                                <span class="text-app-muted">No category selected</span>
                             </div>
                         </div>
                         <div class="flex gap-2 flex-wrap">
@@ -92,7 +92,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="block text-sm text-app-muted mb-1">Gambar Item (jpg/png)</label>
+                        <label class="block text-sm text-app-muted mb-1">Item Image (jpg/png)</label>
                         <div class="flex items-center gap-3">
                             <label for="item-image-input" class="inline-flex items-center gap-2 px-4 py-2 bg-app-accent text-white rounded cursor-pointer hover:opacity-90 transition-colors">
                                 <i class="fas fa-upload"></i>

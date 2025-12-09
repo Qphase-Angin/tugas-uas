@@ -132,8 +132,8 @@
                                         @endif
                                     </div>
                                     <div class="flex-1">
-                                        <p class="font-semibold text-white">{{ $item->name ?? 'Nama Item' }}</p>
-                                        <p class="text-app-muted text-sm mt-1">{{ $item->description ?? 'Deskripsi singkat item tidak tersedia.' }}</p>
+                                        <p class="font-semibold text-white">{{ $item->name ?? 'Item Name' }}</p>
+                                        <p class="text-app-muted text-sm mt-1">{{ $item->description ?? 'Item description not available.' }}</p>
                                         <div class="mt-2">
                                             <p class="text-white font-semibold">{{ isset($item->price) ? ('Rp ' . number_format($item->price, 2, ',', '.')) : '-' }}</p>
                                         </div>
@@ -173,7 +173,7 @@
                                     <div class="flex items-center gap-3">
                                         <img src="{{ asset('storage/' . ($user->image ?? 'default.png')) }}" class="h-10 w-10 rounded-full object-cover border border-app-border" alt="user">
                                         <div>
-                                            <p class="font-semibold text-white">{{ $user->nama ?? 'Nama Pengguna' }}</p>
+                                            <p class="font-semibold text-white">{{ $user->nama ?? 'User Name' }}</p>
                                             <p class="text-app-muted text-xs">{{ $user->email ?? 'email@contoh.test' }}</p>
                                             <p class="text-app-muted text-xs">Joined: {{ optional($user->created_at)->format('Y-m-d') ?? '-' }}</p>
                                             <p class="text-xs mt-1">

@@ -1,7 +1,7 @@
 
 @extends('admin.layout.main')
 
-@section('title', 'Ganti Password')
+@section('title', 'Change Password')
 @section('content')
     <div class="max-w-4xl mx-auto pt-6">
         <div class="flex flex-col md:flex-row gap-6">
@@ -41,7 +41,7 @@
                                     </span>
                                     <input type="password"
                                         class="w-full bg-app-bg border border-app-border rounded-lg py-2.5 pl-10 pr-4 text-white placeholder-gray-600 focus:outline-none focus:border-app-accent focus:ring-1 focus:ring-app-accent transition-all @error('password_saat_ini') border-red-500 focus:border-red-500 @enderror"
-                                        name="password_saat_ini" id="password-saat-ini" placeholder="Masukkan password lama">
+                                        name="password_saat_ini" id="password-saat-ini" placeholder="Enter current password">
                                 </div>
                                 @error('password_saat_ini')
                                     <span id="password-saat-ini-error" class="text-xs text-red-500 mt-1 block">{{ $message }}</span>
@@ -58,7 +58,7 @@
                                     <input
                                         :type="show ? 'text' : 'password'"
                                         class="w-full bg-app-bg border border-app-border rounded-lg py-2.5 pl-10 pr-10 text-white placeholder-gray-600 focus:outline-none focus:border-app-accent focus:ring-1 focus:ring-app-accent transition-all @error('password_baru') border-red-500 focus:border-red-500 @enderror"
-                                        name="password_baru" id="password-baru" placeholder="Masukkan password baru">
+                                        name="password_baru" id="password-baru" placeholder="Enter new password">
 
                                     <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-app-muted hover:text-app-accent transition-colors focus:outline-none">
                                         <i class="fas" :class="show ? 'fa-eye' : 'fa-eye-slash'"></i>
@@ -79,7 +79,7 @@
                                     <input
                                         :type="show ? 'text' : 'password'"
                                         class="w-full bg-app-bg border border-app-border rounded-lg py-2.5 pl-10 pr-10 text-white placeholder-gray-600 focus:outline-none focus:border-app-accent focus:ring-1 focus:ring-app-accent transition-all @error('konfirmasi_password') border-red-500 focus:border-red-500 @enderror"
-                                        name="konfirmasi_password" id="konfirmasi-password" placeholder="Ulangi password baru">
+                                        name="konfirmasi_password" id="konfirmasi-password" placeholder="Repeat new password">
 
                                     <button type="button" @click="show = !show" class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-app-muted hover:text-app-accent transition-colors focus:outline-none">
                                         <i class="fas" :class="show ? 'fa-eye' : 'fa-eye-slash'"></i>

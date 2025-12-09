@@ -91,7 +91,7 @@
                             {{-- Price --}}
                             <div class="bg-app-bg/30 border border-app-border rounded p-4 flex flex-col">
                                 <div class="text-sm text-app-muted">Price</div>
-                                <div class="font-semibold text-white mt-2">Rp {{ number_format($item->price, 0, ',', '.') }}</div>
+                                <div class="font-semibold text-white mt-2">${{ number_format($item->price, 2) }}</div>
                             </div>
 
                             {{-- Rarity --}}

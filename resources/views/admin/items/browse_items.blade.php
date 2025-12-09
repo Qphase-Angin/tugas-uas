@@ -19,7 +19,7 @@
 
         <!-- Category filters -->
         <div class="mb-6 flex items-center gap-3 flex-wrap">
-            <a href="{{ route('admin.items.index') }}" class="px-3 py-1 rounded-full text-sm {{ empty($categorySlug) ? 'bg-app-accent text-white shadow-lg shadow-app-accent/20' : 'bg-app-bg border border-app-border text-app-muted hover:text-white hover:bg-app-cardHover' }}">Semua <span class="ml-1 inline-flex items-center justify-center w-5 h-5 text-xs rounded-full bg-app-bg/70 border border-app-border text-app-muted">{{ $totalItems ?? ($items->total() ?? 0) }}</span></a>
+            <a href="{{ route('admin.items.index') }}" class="px-3 py-1 rounded-full text-sm {{ empty($categorySlug) ? 'bg-app-accent text-white shadow-lg shadow-app-accent/20' : 'bg-app-bg border border-app-border text-app-muted hover:text-white hover:bg-app-cardHover' }}">All <span class="ml-1 inline-flex items-center justify-center w-5 h-5 text-xs rounded-full bg-app-bg/70 border border-app-border text-app-muted">{{ $totalItems ?? ($items->total() ?? 0) }}</span></a>
             @php
                 // consistent category gradient styles reused across admin
                 $catGraduents = [
@@ -83,7 +83,7 @@
 
                         {{-- price below category (as requested) --}}
                         <div class="mt-3">
-                            <div class="text-sm text-app-muted">Rp {{ number_format($item->price, 2, ',', '.') }}</div>
+                            <div class="text-sm text-app-muted">${{ number_format($item->price, 2) }}</div>
                         </div>
 
                     </div>

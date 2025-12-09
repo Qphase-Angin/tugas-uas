@@ -148,11 +148,11 @@ class ItemController extends Controller
             'category_id' => 'required|exists:categories,id',
             'image' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:2048',
         ], [
-            'name.required' => 'Nama item wajib diisi.',
-            'description.required' => 'Deskripsi wajib diisi.',
-            'rarity.required' => 'Rarity wajib dipilih.',
-            'price.required' => 'Harga wajib diisi dan harus lebih dari 0.',
-            'category_id.required' => 'Kategori wajib dipilih.',
+            'name.required' => 'Item name is required.',
+            'description.required' => 'Description is required.',
+            'rarity.required' => 'Rarity must be selected.',
+            'price.required' => 'Price is required and must be greater than 0.',
+            'category_id.required' => 'Category must be selected.',
         ]);
 
         // update metadata

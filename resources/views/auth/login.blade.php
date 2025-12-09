@@ -79,17 +79,17 @@
 
     <!-- Weapons -->
     <!-- Karambit (kanan atas) -->
-    <img src="storage/images/Karambit-Marble-Fade.webp"
+    <img src="{{ asset('storage/images/Karambit-Marble-Fade.webp') }}"
         alt="Karambit"
         class="weapon-bg w-[120px] md:w-[180px] top-10 -right-1 rotate-[130deg] hidden md:block">
 
     <!-- AK-47 (kiri bawah) -->
-    <img src="storage/images/AK-47-Jet-Set.webp"
+    <img src="{{ asset('storage/images/AK-47-Jet-Set.webp') }}"
         alt="AK-47"
         class="weapon-bg w-[280px] md:w-[400px] -bottom-17 -left-16 rotate-[-15deg]">
 
     <!-- AWP (kanan bawah) -->
-    <img src="storage/images/AWP-CMYK.webp"
+    <img src="{{ asset('storage/images/AWP-CMYK.webp') }}"
         alt="AWP"
         class="weapon-bg w-[200px] md:w-[300px] bottom-5 -right-0 rotate-[10deg] hidden lg:block">
 

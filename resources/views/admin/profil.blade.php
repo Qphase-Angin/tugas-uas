@@ -1,7 +1,7 @@
 
 @extends('admin.layout.main')
 
-@section('title', 'Profil Saya')
+@section('title', 'My Profile')
 @section('content')
     <div class="max-w-5xl mx-auto pt-6">
 
@@ -84,7 +84,7 @@
                                     </span>
                                     <input type="text"
                                         class="w-full bg-app-bg/50 border border-app-border rounded-lg py-2.5 pl-10 pr-4 text-white placeholder-gray-600 focus:outline-none focus:border-app-accent focus:ring-1 focus:ring-app-accent transition-all read-only:opacity-60 read-only:cursor-not-allowed read-only:focus:border-app-border read-only:focus:ring-0 @error('nama') border-red-500 focus:border-red-500 @enderror"
-                                        name="nama" id="nama" placeholder="Nama Lengkap"
+                                        name="nama" id="nama" placeholder="Full Name"
                                         value="{{ Auth::user()->nama }}" data-initial-value="{{ Auth::user()->nama }}" readonly>
                                 </div>
                                 @error('nama')
@@ -93,7 +93,7 @@
                             </div>
 
                             <!-- Email (Always Readonly) -->
-                            <div class="group opacity-70" title="Email tidak dapat diubah">
+                            <div class="group opacity-70" title="Email cannot be changed">
                                 <label for="email" class="block text-sm font-medium text-app-muted mb-2">Email Address</label>
                                 <div class="relative">
                                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -104,7 +104,7 @@
                                         value="{{ Auth::user()->email }}" data-initial-value="{{ Auth::user()->email }}"
                                         readonly>
                                 </div>
-                                <p class="text-[10px] text-gray-600 mt-1">*Hubungi Super Admin untuk mengubah email.</p>
+                                <p class="text-[10px] text-gray-600 mt-1">*Contact Super Admin to change email.</p>
                             </div>
                         </div>
                     </div>
