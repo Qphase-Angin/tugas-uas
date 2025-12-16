@@ -23,6 +23,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Seed default categories for items/skins
-        $this->call([\Database\Seeders\CategorySeeder::class]);
+        $this->call([
+            \Database\Seeders\CategorySeeder::class,
+            \Database\Seeders\UserSeeder::class,
+        ]);
     }
 }
